@@ -7,12 +7,17 @@ It is actually a thermo-hygrometer to control the temperature of leopard geckos.
 実はヒョウモントカゲモドキの温度管理をするための温湿度計です。
 飼育ケースに引っ掛けて使うことを想定しています。
 ![image](image/overview.JPG)  
+![image](image/overview-02.png)  
 OLEDs can also be mounted. I chose Arduino base because it has a library of fonts.  
 OLEDも載せられる様にしてます。その時フォントとか選びたいのでライブラリがあるArduinoベースにしました。  
 ![image](image/02.JPG)  
 The program was written in Arduino IDE. The schematic is written in KiCAD and the printed circuit board is made. The structure was made with a 3D printer.  
 プログラムはArduino IDEで書きました。回路図はKiCADで書き、プリント基板を作っています。構造物は3Dプリンターで作りました。  
+
+![image](image/04-01.png)
+![image](image/04-02.png)  
 ![image](image/01.JPG)
+![image](image/01-02.JPG)
 ![image](image/03.JPG)
 
 ---
