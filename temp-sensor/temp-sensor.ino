@@ -522,7 +522,11 @@ void setup() {
 
   if ( readTEbit() ){
     digitalWrite(8,0);  // Turns on the LED when generateINTeveryHour
+    delay(100);
     ReadThermocouple(); //for test
+    delay(100);
+    ReadThermocouple(); //for test
+    delay(100);
     //Serial.println(temperatureData);
     writeCurrentTimeAndTemp();  // to SD Card
     delay(100);
@@ -569,9 +573,10 @@ void setup() {
 #define AMinutH 9
 #define AMinutL 10
 int AdjustEachDigitOfClock;
-#define DispSensor 0
-#define DispClock 1
-#define AdjustClock 2
+#define DispSensor  0
+#define DispThermocouple  1
+#define DispClock   2
+#define AdjustClock 3
 int StateOfDisplay = DispSensor;
 int PollingCounter = 0;
 void loop() {
@@ -585,6 +590,12 @@ void loop() {
         LCD_cursor_off();
         DispTH();
         clearINT(); //If don't clear INT, stays power-on all the time.
+        break;
+
+      case DispThermocouple:
+        ReadThermocouple();
+        sprintf(DisplayData, "%3d.%02d C  \n\0", (int)temperatureData, abs( (int)(temperatureData*100) % 100) );  // With Arduino, %f is not available.
+        LCD_xy(0,0); LCD_str2( DisplayData );
         break;
         
       case DispClock:       // Display Clock
@@ -620,9 +631,17 @@ void loop() {
   //Press Center button to switch display 0:temperature or 1:clock
   if (SW[sw_Center].Pressed && (StateOfDisplay != AdjustClock) ){
     LCD_clear();
-    if (StateOfDisplay == DispSensor) {
-      StateOfDisplay = DispClock;
-    } else StateOfDisplay = DispSensor;
+    switch ( StateOfDisplay ){
+      case DispSensor:
+        StateOfDisplay = DispThermocouple;
+        break;
+      case DispThermocouple:
+        StateOfDisplay = DispClock;
+        break;
+      case DispClock:
+        StateOfDisplay = DispSensor;
+        break;
+    }
     SW[sw_Center].LongPressed = false;
     SW[sw_Center].Pressed = false;
     PollingCounter = 1999;

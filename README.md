@@ -14,8 +14,8 @@ OLEDも載せられる様にしてます。その時フォントとか選びた�
 The program was written in Arduino IDE. The schematic is written in KiCAD and the printed circuit board is made. The structure was made with a 3D printer.  
 プログラムはArduino IDEで書きました。回路図はKiCADで書き、プリント基板を作っています。構造物は3Dプリンターで作りました。  
 
-![image](image/04-01.png)
-![image](image/04-02.png)  
+<image src="image/04-01.png" width="320px">
+<image src="image/04-02.png" width="320px">
 ![image](image/01.JPG)
 ![image](image/01-02.JPG)
 ![image](image/03.JPG)
@@ -52,4 +52,35 @@ The P-ch MOS FET that turns the power supply On/Off could not be turned Off. The
 ![image](image/06_CUT.png)
 
 ---
+
+[state diagram 状態遷移]
+```mermaid
+stateDiagram-v2
+    s1: Power On
+    s2: Write Temp/Humi data to SD card when TE=Enable
+    s3: Display T/H sensor
+    s4: Display Thermocouple
+    s5: Display Clock
+    s6: Adjust Clock
+    s7: Timer Enable
+    s8: Timer Disable
+    s9: Shift Digit Up
+    s10: Increment
+    s11: Decrement
+    s1 --> s2
+    s2 --> s3
+    s3 --> s4: push center-button
+    s4 --> s5: push center-button
+    s5 --> s3: push center-button
+    s5 --> s6: long-push center-button
+    s6 --> s5: long-push center-button
+    s6 --> s9: push center-button
+    s9 --> s6
+    s6 --> s10: push up-button
+    s10 --> s6
+    s6 --> s11: push up-button
+    s11 --> s6
+    s7 --> s8: long-push push-button
+    s8 --> s7: long-push push-button
+```
 
